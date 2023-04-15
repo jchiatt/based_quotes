@@ -1,3 +1,5 @@
+import Hero from "../components/Hero";
+import Quote from "../components/Quote";
 import Layout from "../components/layout";
 import Head from "next/head";
 
@@ -8,7 +10,8 @@ export default function Index({ preview }) {
         <Head>
           <title>Based Quotes</title>
         </Head>
-        <h1>Based Quotes</h1>
+        <Hero />
+        <Quote />
       </Layout>
     </>
   );
