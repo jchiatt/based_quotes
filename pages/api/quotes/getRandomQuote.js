@@ -1,6 +1,16 @@
 import { getRedisInstance } from "../../../lib/redis";
 
+const accessKey = process.env.API_ACCESS_SECRET;
+
 export default async function getRandomQuote(req, res) {
+  // check access key in production
+  if (process.env.NODE_ENV === "production") {
+    if (req.headers["x-access-key"] !== accessKey) {
+      res.status(401).send();
+      return;
+    }
+  }
+
   // get redis instance
   const redis = getRedisInstance();
 
