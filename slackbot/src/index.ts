@@ -21,12 +21,17 @@ export interface Env {
   // MY_BUCKET: R2Bucket;
   SLACK_WEBHOOK_DESTINATION_URL: string;
   BASED_QUOTES_API_URL: string;
-}
+  BASED_QUOTES_API_ACCESS_KEY: string;
 
 async function getRandomQuote(
-  url: string
+  env: Env
 ): Promise<{ author: string; quote: string }> {
-  const response = await fetch(url);
+  const response = await fetch(env.BASED_QUOTES_API_URL, {
+    headers: {
+      "x-access-key": env.BASED_QUOTES_API_ACCESS_KEY,
+    },
+  });
+}
   const data: { author: string; quote: string } = await response.json();
   return data;
 }
@@ -37,8 +42,7 @@ export default {
     env: Env,
     ctx: ExecutionContext
   ): Promise<void> {
-    console.log("Fetching a quote");
-    const { quote, author } = await getRandomQuote(env.BASED_QUOTES_API_URL);
+    const { quote, author } = await getRandomQuote(env);
     fetch(env.SLACK_WEBHOOK_DESTINATION_URL, {
       method: "POST",
       body: JSON.stringify({
