@@ -110,7 +110,7 @@ async function syncContentfulToUpstashRedis() {
     }
 
     // if it doesn't, we will generate a key for it (md5 it) and store it in redis
-    const MAX_AGE = 60_000 * 60 * 24; // 1 day
+    const MAX_AGE = 60_000 * 60 * 24 * 365; // 1 year
     const EXPIRY_MS = `PX`; // milliseconds
 
     // cache data
