@@ -22,6 +22,7 @@ export interface Env {
   SLACK_WEBHOOK_DESTINATION_URL: string;
   BASED_QUOTES_API_URL: string;
   BASED_QUOTES_API_ACCESS_KEY: string;
+}
 
 async function getRandomQuote(
   env: Env
@@ -31,7 +32,7 @@ async function getRandomQuote(
       "x-access-key": env.BASED_QUOTES_API_ACCESS_KEY,
     },
   });
-}
+
   const data: { author: string; quote: string } = await response.json();
   return data;
 }
